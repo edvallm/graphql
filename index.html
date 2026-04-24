@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zone01 Profile</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ── Login view ── -->
+  <div id="view-login" class="view">
+    <div class="login-card">
+      <h1>Zone01 Profile</h1>
+      <form id="login-form" novalidate>
+        <label for="credential">Username or Email</label>
+        <input id="credential" type="text" autocomplete="username" placeholder="username or email" required />
+
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="current-password" placeholder="password" required />
+
+        <p id="login-error" class="error hidden"></p>
+
+        <button type="submit" id="login-btn">Sign in</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ── Profile view ── -->
+  <div id="view-profile" class="view hidden">
+    <header class="profile-header">
+      <h1>My Profile</h1>
+      <button id="logout-btn" class="btn-logout">Log out</button>
+    </header>
+
+    <main class="profile-main">
+
+      <!-- Section 1: Basic info -->
+      <section class="card" id="section-user">
+        <h2>User Info</h2>
+        <div id="user-info" class="info-grid"></div>
+      </section>
+
+      <!-- Section 2: XP -->
+      <section class="card" id="section-xp">
+        <h2>Experience Points</h2>
+        <div id="xp-info" class="info-grid"></div>
+      </section>
+
+      <!-- Section 3: Audit ratio -->
+      <section class="card" id="section-audit">
+        <h2>Audit Ratio</h2>
+        <div id="audit-info" class="info-grid"></div>
+      </section>
+
+      <!-- Section 4: Statistics -->
+      <section class="card" id="section-stats">
+        <h2>Statistics</h2>
+        <div class="graphs-grid">
+          <div class="graph-wrap">
+            <h3>XP Over Time</h3>
+            <div id="graph-xp-time"></div>
+          </div>
+          <div class="graph-wrap">
+            <h3>Project Pass / Fail</h3>
+            <div id="graph-pass-fail"></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script type="module" src="js/auth.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

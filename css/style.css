@@ -1,0 +1,256 @@
+/* ── Reset & base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --surface2: #232636;
+  --border: #2e3149;
+  --accent: #7c6af7;
+  --accent2: #4ecdc4;
+  --pass: #4ade80;
+  --fail: #f87171;
+  --text: #e2e4f0;
+  --text-muted: #8b8fa8;
+  --radius: 12px;
+  --font: 'Inter', system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ── Views ── */
+.view { min-height: 100vh; }
+.hidden { display: none !important; }
+
+/* ── Login ── */
+#view-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at 60% 30%, #1e1b4b 0%, var(--bg) 70%);
+}
+
+.login-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: 0 8px 40px rgba(0,0,0,.5);
+}
+
+.login-card h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.75rem;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.login-card label {
+  display: block;
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  margin-bottom: .35rem;
+  margin-top: 1rem;
+}
+
+.login-card input {
+  width: 100%;
+  padding: .65rem .85rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: .95rem;
+  outline: none;
+  transition: border-color .2s;
+}
+.login-card input:focus { border-color: var(--accent); }
+
+.error {
+  color: var(--fail);
+  font-size: .85rem;
+  margin-top: .75rem;
+  padding: .5rem .75rem;
+  background: rgba(248,113,113,.1);
+  border-radius: 6px;
+  border-left: 3px solid var(--fail);
+}
+
+.login-card button[type="submit"] {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: .75rem;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity .2s, transform .1s;
+}
+.login-card button[type="submit"]:hover { opacity: .88; }
+.login-card button[type="submit"]:active { transform: scale(.98); }
+.login-card button[type="submit"]:disabled { opacity: .5; cursor: not-allowed; }
+
+/* ── Profile layout ── */
+.profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 2rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.profile-header h1 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.btn-logout {
+  padding: .4rem .9rem;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: .85rem;
+  transition: border-color .2s, color .2s;
+}
+.btn-logout:hover { border-color: var(--fail); color: var(--fail); }
+
+.profile-main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  display: grid;
+  gap: 1.5rem;
+}
+
+/* ── Card ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.card h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin-bottom: 1.1rem;
+}
+
+/* ── Info grid ── */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: .85rem;
+}
+
+.info-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: .75rem 1rem;
+}
+
+.info-item .label {
+  font-size: .72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--text-muted);
+  margin-bottom: .25rem;
+}
+
+.info-item .value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.info-item .value.accent  { color: var(--accent); }
+.info-item .value.accent2 { color: var(--accent2); }
+.info-item .value.pass    { color: var(--pass); }
+
+/* ── Graphs ── */
+.graphs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.graph-wrap h3 {
+  font-size: .85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--text-muted);
+  margin-bottom: .85rem;
+}
+
+.graph-wrap svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* SVG graph shared styles */
+.graph-axis { stroke: var(--border); stroke-width: 1; }
+.graph-grid  { stroke: var(--border); stroke-width: 1; stroke-dasharray: 4 4; }
+.graph-label { fill: var(--text-muted); font-size: 11px; font-family: var(--font); }
+.graph-line  { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+.graph-dot   { fill: var(--accent); }
+.graph-area  { fill: url(#areaGrad); }
+
+/* Donut legend */
+.donut-legend {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: .75rem;
+  font-size: .82rem;
+}
+.donut-legend span { display: flex; align-items: center; gap: .4rem; }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+/* Loading shimmer */
+.shimmer {
+  background: linear-gradient(90deg, var(--surface2) 25%, var(--border) 50%, var(--surface2) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 6px;
+  height: 1.2rem;
+  width: 60%;
+}
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+@media (max-width: 600px) {
+  .profile-header { padding: 1rem; }
+  .profile-main   { padding: 1rem; }
+}
