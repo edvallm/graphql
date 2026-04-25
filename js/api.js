@@ -1,6 +1,7 @@
 import { getToken } from './auth.js';
+import { PROXY } from './config.js';
 
-const GQL_URL = 'https://zone01.gr/api/graphql-engine/v1/graphql';
+const GQL_URL = `${PROXY}/api/graphql-engine/v1/graphql`;
 
 export async function query(gql, variables = {}) {
   const token = getToken();

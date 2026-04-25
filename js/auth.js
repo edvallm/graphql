@@ -1,4 +1,5 @@
-const SIGNIN_URL = 'https://zone01.gr/api/auth/signin';
+import { PROXY } from './config.js';
+const SIGNIN_URL = `${PROXY}/api/auth/signin`;
 const TOKEN_KEY  = 'z01_jwt';
 
 export function getToken() {
