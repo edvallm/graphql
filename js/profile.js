@@ -27,7 +27,13 @@ const Q_AUDIT = `{
 // Argument query — only XP transactions, with nested object name
 const Q_XP = `{
   transaction(
-    where: { type: { _eq: "xp" } }
+    where: {
+      type: { _eq: "xp" }
+      _and: [
+        { path: { _like: "/athens/div-01/%" } }
+        { path: { _nlike: "/athens/div-01/piscine-%/%" } }
+      ]
+    }
     order_by: { createdAt: asc }
   ) {
     amount
