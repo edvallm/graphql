@@ -73,12 +73,14 @@ export function renderXpOverTime(transactions, container) {
     svg.append(lbl);
   }
 
-  // X labels
-  const ticks = Math.min(5, points.length);
-  for (let i = 0; i < ticks; i++) {
-    const pt = points[Math.round((i / (ticks - 1 || 1)) * (points.length - 1))];
-    const lbl = el('text', { class: 'graph-label', x: xScale(pt.date), y: H - 8, 'text-anchor': 'middle' });
-    lbl.textContent = pt.date.toLocaleDateString('en', { month: 'short', year: '2-digit' });
+  // X labels — evenly spaced across the time range, not data points
+  const TICKS = 5;
+  for (let i = 0; i < TICKS; i++) {
+    const t = minD + (i / (TICKS - 1)) * (maxD - minD);
+    const x = PL + (i / (TICKS - 1)) * iW;
+    const anchor = i === 0 ? 'start' : i === TICKS - 1 ? 'end' : 'middle';
+    const lbl = el('text', { class: 'graph-label', x, y: H - 8, 'text-anchor': anchor });
+    lbl.textContent = new Date(t).toLocaleDateString('en', { month: 'short', year: '2-digit' });
     svg.append(lbl);
   }
 
