@@ -190,12 +190,10 @@ body {
 }
 
 .info-item .value {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--text);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  word-break: break-word;
 }
 
 .info-item .value.accent  { color: var(--accent); }
@@ -270,6 +268,48 @@ body {
 }
 .donut-legend span { display: flex; align-items: center; gap: .4rem; }
 .legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+/* ── Recent activity ── */
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .6rem .9rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  gap: 1rem;
+}
+
+.activity-name {
+  font-weight: 600;
+  font-size: .9rem;
+  color: var(--text);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.activity-xp {
+  font-weight: 700;
+  font-size: .9rem;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.activity-date {
+  font-size: .78rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
 
 /* Loading shimmer */
 .shimmer {

@@ -50,10 +50,7 @@ loginForm.addEventListener('submit', async e => {
     await login(credential, password);
     showProfile();
   } catch (err) {
-    const msg = err.message?.includes('401') || err.message?.includes('403')
-      ? 'Invalid credentials. Please try again.'
-      : err.message || 'Login failed. Please try again.';
-    showError(msg);
+    showError(err.message || 'Login failed. Please try again.');
   } finally {
     loginBtn.disabled = false;
     loginBtn.textContent = 'Sign in';

@@ -120,6 +120,20 @@ function renderXp(transactions) {
   ].join('');
 }
 
+function renderRecentActivity(transactions) {
+  const el = document.getElementById('recent-activity');
+  const recent = [...transactions].reverse().slice(0, 5);
+  el.innerHTML = `<div class="activity-list">${
+    recent.map(t => `
+      <div class="activity-item">
+        <span class="activity-name">${t.object?.name ?? 'Unknown'}</span>
+        <span class="activity-xp">+${fmt(t.amount)}</span>
+        <span class="activity-date">${new Date(t.createdAt).toLocaleDateString('en', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+      </div>
+    `).join('')
+  }</div>`;
+}
+
 function renderAudit(users) {
   const u = users[0] ?? {};
   const ratio = typeof u.auditRatio === 'number' ? u.auditRatio.toFixed(2) : '—';
@@ -144,6 +158,7 @@ export async function loadProfile() {
 
   renderUser(userData.user ?? []);
   renderXp(xpData.transaction ?? []);
+  renderRecentActivity(xpData.transaction ?? []);
   renderAudit(auditData.user ?? []);
 
   renderXpOverTime(xpData.transaction ?? [],   document.getElementById('graph-xp-time'));
