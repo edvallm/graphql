@@ -227,6 +227,10 @@ body {
   gap: 1.5rem;
 }
 
+.graph-wrap--full {
+  margin-bottom: 1.5rem;
+}
+
 .graph-wrap--wide {
   grid-column: 1 / -1;
   max-width: 480px;
