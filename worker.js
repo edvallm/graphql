@@ -13,7 +13,7 @@ export default {
         return new Response(null, { status: 204, headers: corsHeaders });
       }
 
-      const target = 'https://zone01.gr' + url.pathname + url.search;
+      const target = 'https://platform.zone01.gr' + url.pathname + url.search;
       const proxied = await fetch(target, {
         method: request.method,
         headers: request.headers,
