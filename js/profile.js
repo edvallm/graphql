@@ -1,5 +1,5 @@
 import { query } from './api.js';
-import { renderXpOverTime, renderPassFail } from './graphs.js';
+import { renderXpOverTime, renderPassFail, renderSkillsRadar } from './graphs.js';
 
 /* ── Queries ──────────────────────────────────────────────── */
 
@@ -24,7 +24,7 @@ const Q_AUDIT = `{
   }
 }`;
 
-// Argument query — only XP transactions, with nested object name
+// Argument query — XP transactions for div-01 only, excluding piscine sub-exercises
 const Q_XP = `{
   transaction(
     where: {
@@ -44,7 +44,7 @@ const Q_XP = `{
   }
 }`;
 
-// Nested query — results with nested user and object info
+// Nested query — results with nested object info
 const Q_RESULTS = `{
   result {
     grade
@@ -52,6 +52,17 @@ const Q_RESULTS = `{
       name
       type
     }
+  }
+}`;
+
+// Argument query — skill transactions
+const Q_SKILLS = `{
+  transaction(
+    where: { type: { _like: "skill_%" } }
+    order_by: { amount: desc }
+  ) {
+    type
+    amount
   }
 }`;
 
@@ -68,6 +79,22 @@ function fmt(n) {
   if (n >= 1_000_000) return (n / 1_000_000).toFixed(2) + ' MB';
   if (n >= 1_000)     return (n / 1_000).toFixed(1) + ' kB';
   return String(n);
+}
+
+function processSkills(transactions) {
+  const map = new Map();
+  for (const t of transactions) {
+    if (!map.has(t.type) || map.get(t.type) < t.amount) {
+      map.set(t.type, t.amount);
+    }
+  }
+  return Array.from(map.entries())
+    .map(([type, amount]) => ({
+      name: type.replace('skill_', '').replace(/-/g, ' '),
+      amount,
+    }))
+    .sort((a, b) => b.amount - a.amount)
+    .slice(0, 12);
 }
 
 /* ── Render functions ─────────────────────────────────────── */
@@ -88,8 +115,8 @@ function renderXp(transactions) {
   const total = transactions.reduce((s, t) => s + t.amount, 0);
   const el = document.getElementById('xp-info');
   el.innerHTML = [
-    infoItem('Total XP', fmt(total), 'accent'),
-    infoItem('Transactions', transactions.length, 'accent2'),
+    infoItem('Total XP',      fmt(total),              'accent'),
+    infoItem('Transactions',  transactions.length,     'accent2'),
   ].join('');
 }
 
@@ -98,26 +125,28 @@ function renderAudit(users) {
   const ratio = typeof u.auditRatio === 'number' ? u.auditRatio.toFixed(2) : '—';
   const el = document.getElementById('audit-info');
   el.innerHTML = [
-    infoItem('Audit Ratio', ratio, ratio >= 1 ? 'pass' : 'accent'),
-    infoItem('Done (up)',   fmt(u.totalUp   ?? 0), 'pass'),
-    infoItem('Received (down)', fmt(u.totalDown ?? 0)),
+    infoItem('Audit Ratio',      ratio,                 ratio >= 1 ? 'pass' : 'accent'),
+    infoItem('Done (up)',        fmt(u.totalUp   ?? 0), 'pass'),
+    infoItem('Received (down)',  fmt(u.totalDown ?? 0)),
   ].join('');
 }
 
 /* ── Main load ────────────────────────────────────────────── */
 
 export async function loadProfile() {
-  const [userData, auditData, xpData, resultData] = await Promise.all([
+  const [userData, auditData, xpData, resultData, skillData] = await Promise.all([
     query(Q_USER),
     query(Q_AUDIT),
     query(Q_XP),
     query(Q_RESULTS),
+    query(Q_SKILLS),
   ]);
 
   renderUser(userData.user ?? []);
   renderXp(xpData.transaction ?? []);
   renderAudit(auditData.user ?? []);
 
-  renderXpOverTime(xpData.transaction ?? [], document.getElementById('graph-xp-time'));
-  renderPassFail(resultData.result ?? [], document.getElementById('graph-pass-fail'));
+  renderXpOverTime(xpData.transaction ?? [],   document.getElementById('graph-xp-time'));
+  renderPassFail(resultData.result ?? [],       document.getElementById('graph-pass-fail'));
+  renderSkillsRadar(processSkills(skillData.transaction ?? []), document.getElementById('graph-skills'));
 }

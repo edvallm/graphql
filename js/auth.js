@@ -25,8 +25,7 @@ export async function login(credential, password) {
   });
 
   if (!res.ok) {
-    const text = await res.text().catch(() => '');
-    throw new Error(text || `Login failed (${res.status})`);
+    throw new Error('Invalid credentials. Please try again.');
   }
 
   // The endpoint returns the JWT as either a plain string or a JSON-quoted string

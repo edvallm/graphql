@@ -202,11 +202,36 @@ body {
 .info-item .value.accent2 { color: var(--accent2); }
 .info-item .value.pass    { color: var(--pass); }
 
+/* ── Tooltip ── */
+.graph-tooltip {
+  position: fixed;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: .45rem .75rem;
+  font-size: .8rem;
+  line-height: 1.5;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .12s;
+  z-index: 200;
+  box-shadow: 0 4px 16px rgba(0,0,0,.4);
+}
+.graph-tooltip.visible { opacity: 1; }
+.graph-tooltip b { color: var(--accent); }
+
 /* ── Graphs ── */
 .graphs-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 1.5rem;
+}
+
+.graph-wrap--wide {
+  grid-column: 1 / -1;
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .graph-wrap h3 {
