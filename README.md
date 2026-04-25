@@ -2,7 +2,8 @@
 
 A personal profile page for the Zone01 Athens platform, built with vanilla HTML, CSS, and JavaScript. Authenticates via JWT and displays user data fetched from the platform's GraphQL API.
 
-**Live:** https://graphql.magnus6139.workers.dev
+**Live:** https://graphql.magnus6139.workers.dev  
+**Backup:** https://edvallm.github.io/graphql/
 
 ---
 
