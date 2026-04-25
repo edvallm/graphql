@@ -190,9 +190,12 @@ body {
 }
 
 .info-item .value {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .info-item .value.accent  { color: var(--accent); }
